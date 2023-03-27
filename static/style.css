@@ -74,7 +74,15 @@ p{
     text-align: bottom;
 }
 
+a{
+    text-decoration: none;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #4C2A85;
+}
 
+a:hover{
+    color: #320E3B;
+}
 
 
 
