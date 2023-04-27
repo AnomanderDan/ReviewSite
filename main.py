@@ -46,12 +46,15 @@ def home():
 
 @app.route('/game/<int:id>')
 def game(id):
-    game = Game.query.filter_by(id = id).first()
+    game = Game.query.filter_by(id = id).first_or_404()
     genres = Genre.query.all()
 
     return render_template('game.html', game=game, genres=genres)
 
-
+# 404 error page
+@app.errorhandler(404)
+def wrong(e):
+    return render_template("404.html"), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
