@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     {% extends "base.html" %}
+    {% block content %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,15 +9,22 @@
     <title>Document</title>
 </head>
 <body>
-    
-    {% block content %}
-    <img class="rpage" src="/static/photo/{{ game.image }}"></img>
-    <h2>{{game.name}}</h2>
+    <div>
+        <a class="return" href="/">return to main page</a>
+    </div>
+    <div>
+        <h2>{{game.name}}</h2>
+    </div>
+    <table>
+        <tr>
+            <th><img class="rpage" src="/static/photo/{{ game.image }}"></img></th>
+            <th><p>{{game.synopsis}}</p></th>
+        </tr>
+    </table>
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
     <h3>Review</h3>
     <p>{{game.review}}</p>
-    <a href="/">return to main page</a>
     {% endblock %}
 
     

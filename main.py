@@ -22,6 +22,7 @@ class Game(db.Model):
     review = db.Column(db.String)
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
     image = db.Column(db.String)
+    synopsis = db.Column(db.String)
     #display it nicely
     def __repr__(self) -> str:
         return f"Game: {self.game}"

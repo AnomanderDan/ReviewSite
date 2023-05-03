@@ -57,10 +57,15 @@ h2{
 
 h3{
     font-family: 'Josefin Sans', sans-serif;
+    margin-left: 10px;
 }
 
 p{
     font-family: 'Kanit', sans-serif;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .card img{
@@ -82,8 +87,21 @@ a{
     color: #4C2A85;
 }
 
+.return{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 a:hover{
     color: #320E3B;
+}
+
+table{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
