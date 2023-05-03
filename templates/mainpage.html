@@ -8,13 +8,14 @@
     <title>Document</title>
 </head>
 <body>
+  {# sort menu #}
     {% block content %}
     <div class="dropdown">
       <button class="dropbtn">Dropdown</button>
       <div class="dropdown-content">
         {% for genre in genres %}
         <div>
-            <a href="#">{{genre.genre}}</a>
+            <a href="{{url_for('genre', id=genre.id)}}">{{genre.genre}}</a>
         </div>
         {% endfor %}
       </div>
@@ -22,6 +23,7 @@
 
     <div class="split"></div>
 
+    {# game card + link #}
     <div class="game_container">
     {% for game in games %}
     <div class="card">

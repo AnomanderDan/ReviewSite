@@ -45,17 +45,23 @@ def home():
 
     return render_template("mainpage.html", games=games, genres=genres)
 
+
 @app.route('/game/<int:id>')
 def game(id):
     game = Game.query.filter_by(id = id).first_or_404()
-    genres = Genre.query.all()
 
-    return render_template('game.html', game=game, genres=genres)
+    return render_template('game.html', game=game)
 
 # 404 error page
 @app.errorhandler(404)
 def wrong(e):
     return render_template("404.html"), 404
+
+@app.route('/genre/<int:id>')
+def sort(id):
+    game = Game.query.filter_by(id = id).first_or_404()
+    print(game)
+    return render_template('sort.html', game=game)
 
 if __name__ == "__main__":
     app.run(debug=True)

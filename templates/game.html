@@ -15,20 +15,19 @@
     <div>
         <h2>{{game.name}}</h2>
     </div>
+    {# Image + synopsis table #}
     <table>
         <tr>
             <th><img class="rpage" src="/static/photo/{{ game.image }}"></img></th>
-            <th><p>{{game.synopsis}}</p></th>
+            <th><p class="syn">{{game.synopsis}}</p></th>
         </tr>
     </table>
+    
+    {# Basic information #}
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
     <h3>Review</h3>
     <p>{{game.review}}</p>
     {% endblock %}
-
-    
-
-    
 </body>
 </html>
