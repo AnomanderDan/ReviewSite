@@ -63,5 +63,16 @@ def sort(id):
     print(game)
     return render_template('sort.html', game=game)
 
+@app.route('/login')
+def login():
+
+    return render_template('login.html')
+
+@app.route('/register')
+def login():
+
+    return render_template('register.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
