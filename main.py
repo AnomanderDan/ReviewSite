@@ -28,13 +28,15 @@ class Game(db.Model):
         return f"Game: {self.game}"
 
 
-
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genre = db.Column(db.String)
     games = db.relationship('Game', backref='genre', lazy=True)
 
-
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(80), nullable=False)
 
 
 #routes
@@ -69,7 +71,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/register')
-def login():
+def register():
 
     return render_template('register.html')
 
