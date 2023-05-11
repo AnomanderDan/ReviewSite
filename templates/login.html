@@ -8,9 +8,18 @@
     <title>Document</title>
 </head>
 <body>
+    {# login page #}
     {% block content %}
-    <h1> Login Page</h1>
-    <a href="{{url_for('register')}}">Don't have an account?</a>
+        <h1> Login Page</h1>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{ form.username}}
+            {{ form.password }}
+            {{ form.submit }}
+        </form>
+
+        <a href="{{url_for('register')}}">Don't have an account?</a>
     {% endblock %}
 </body>
 </html>
