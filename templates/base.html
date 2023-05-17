@@ -15,10 +15,17 @@
       <button class="dropbtn">Menu</button>
       <div class="dropdown-content">
         <div>
-            <a href="{{url_for('login')}}">Login</a>
-            {% if current_user.is_authenticated %}
-            <a href="{{url_for('logout')}}">Logout</a>
-            {% endif %}
+          <table>
+            <tr>
+              <a href="{{url_for('login')}}">Login</a>
+              {% if current_user.is_authenticated %}
+              <a href="{{url_for('logout')}}">Logout</a>
+              {% endif %}
+            </tr>
+            <tr>
+              <a href="{{url_for('home')}}">Main Page</a>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

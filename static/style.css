@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
 
 html{
-    background-color: #ccd5ae;
+    background-color: #353855;
     margin-left: 25px;
     margin-right: 25px;
 }
@@ -20,7 +20,9 @@ h1{
 }
 
 .header{
-    background-color: #e9edc9;
+    padding: 0.1px;
+    background-color: #185ba7;
+    border-radius: 10px;
 }
 
 .game_container{
