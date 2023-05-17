@@ -8,20 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-  {# sort menu #}
     {% block content %}
-    <div class="dropdown">
-      <button class="dropbtn">Dropdown</button>
-      <div class="dropdown-content">
-        {% for genre in genres %}
-        <div>
-            <a href="#">{{genre.genre}}</a>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="split"></div>
 
     {# game card + link #}
     <div class="game_container">

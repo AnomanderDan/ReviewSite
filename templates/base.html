@@ -8,11 +8,23 @@
     <title>Game Circle Reviews</title>
 </head>
 <body>
-    <a href="{{url_for('login')}}">Login</a>
-    {% if current_user.is_authenticated %}
-    <a href="{{url_for('logout')}}">Logout</a>
-    {% endif %}
     {% include "header.html" %}
+
+    {# sort menu #}
+    <div class="dropdown">
+      <button class="dropbtn">Menu</button>
+      <div class="dropdown-content">
+        <div>
+            <a href="{{url_for('login')}}">Login</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{url_for('logout')}}">Logout</a>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    
+
+    
     {% block content %}
     {% endblock %}
 </body>
