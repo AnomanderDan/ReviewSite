@@ -67,6 +67,7 @@ class RegisterForm(FlaskForm):
                 "That username already exists. Please pick a new one.")
 
 
+
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
@@ -143,6 +144,11 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
+
+
+# @app.route('/comment', methods=['GET', 'POST'])
+# @login_required
+# def comment():
 
 
 #app run
