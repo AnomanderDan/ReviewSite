@@ -32,7 +32,6 @@ def load_user(user_id):
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    review = db.Column(db.String)
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
     image = db.Column(db.String)
     synopsis = db.Column(db.String)
@@ -50,6 +49,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
