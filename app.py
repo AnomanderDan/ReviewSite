@@ -31,10 +31,10 @@ def load_user(user_id):
 #Game/Genre classes
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.Text)
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
-    image = db.Column(db.String)
-    synopsis = db.Column(db.String)
+    image = db.Column(db.Text)
+    synopsis = db.Column(db.Text)
     #display it nicely
     def __repr__(self) -> str:
         return f"Game: {self.game}"
@@ -42,7 +42,7 @@ class Game(db.Model):
 
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    genre = db.Column(db.String)
+    genre = db.Column(db.Text)
     games = db.relationship('Game', backref='genre', lazy=True)
 
 class User(db.Model, UserMixin):
@@ -53,6 +53,12 @@ class User(db.Model, UserMixin):
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    create_rev = db.Column(db.Text)
+
+class Game_Review(db.Model):
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'))
+
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
