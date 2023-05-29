@@ -55,9 +55,15 @@ class Reviews(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     create_rev = db.Column(db.Text)
 
+
 class Game_Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'))
+
+
+class Write_Review(FlaskForm):
+    write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
 
 
 class RegisterForm(FlaskForm):
