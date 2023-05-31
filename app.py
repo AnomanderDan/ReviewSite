@@ -27,8 +27,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 #classes
-
-#Game/Genre classes
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
@@ -64,7 +62,6 @@ class Game_Review(db.Model):
 
 class Write_Review(FlaskForm):
     write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
-
 
 
 
@@ -107,10 +104,19 @@ def game(id):
     form = Write_Review()
     game = Game.query.filter_by(id = id).first_or_404()
     if form.validate_on_submit():
-        print(form.write.data)
+        new_review = Reviews(create_rev=form.write.data, user_id=current_user.id)
+        db.session.add(new_review)
+        db.session.commit()
         return redirect('/game/' + str(id))
 
     return render_template('game.html', game=game, form=form)
+
+    # if form.validate_on_submit():
+    #     hashed_password = bcrypt.generate_password_hash(form.password.data)
+    #     new_user = User(username=form.username.data, password=hashed_password)
+    #     db.session.add(new_user)
+    #     db.session.commit()
+    #     return redirect(url_for('login'))
 
 
 @app.route('/genre/<int:id>')
