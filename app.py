@@ -66,6 +66,8 @@ class Write_Review(FlaskForm):
     write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
 
 
+
+
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
@@ -99,11 +101,16 @@ def home():
     return render_template("mainpage.html", games=games, genres=genres)
 
 
-@app.route('/game/<int:id>')
+@app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
+    print("msg")
+    form = Write_Review()
     game = Game.query.filter_by(id = id).first_or_404()
+    if form.validate_on_submit():
+        print(form.write.data)
+        return redirect('/game/' + str(id))
 
-    return render_template('game.html', game=game)
+    return render_template('game.html', game=game, form=form)
 
 
 @app.route('/genre/<int:id>')
@@ -159,7 +166,6 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
-
 
 # @app.route('/comment', methods=['GET', 'POST'])
 # @login_required
