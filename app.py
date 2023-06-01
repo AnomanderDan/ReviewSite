@@ -52,6 +52,7 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     create_rev = db.Column(db.Text)
+    current_game = db.Column(db.Integer, db.ForeignKey('game.id'))
 
 
 class Game_Review(db.Model):
@@ -101,17 +102,17 @@ def home():
 @app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
     print("msg")
-    user_control = LoginForm
     form = Write_Review()
+    review = Reviews.query.filter(Reviews.current_game == id)
     game = Game.query.filter_by(id = id).first_or_404()
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
-        new_review = Reviews(create_rev=form.write.data, user_id=current_user.id)
+        new_review = Reviews(create_rev=form.write.data, user_id=current_user.id, current_game=id)
         db.session.add(new_review)
         db.session.commit()
         return redirect('/game/' + str(id))
 
-    return render_template('game.html', game=game, form=form)
+    return render_template('game.html', game=game, form=form, review=review)
 
     # if form.validate_on_submit():
     #     hashed_password = bcrypt.generate_password_hash(form.password.data)

@@ -29,12 +29,12 @@
         {{ form.write.label }} {{ form.write(size=20) }}
         <input type="submit" value="Go">
     </form>
+    </div>
     <div>
         <h3>Reviews</h3>
         {% for review in review %}
-            <p>{{review.review_id}}</p>
+            <p>{{review.create_rev}}</p>
         {% endfor %}
-    </div>
     </div>
     {% endblock %}
 </body>
