@@ -101,8 +101,10 @@ def home():
 @app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
     print("msg")
+    user_control = LoginForm
     form = Write_Review()
     game = Game.query.filter_by(id = id).first_or_404()
+    #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         new_review = Reviews(create_rev=form.write.data, user_id=current_user.id)
         db.session.add(new_review)

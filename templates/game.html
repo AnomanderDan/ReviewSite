@@ -24,13 +24,17 @@
     {# Basic information #}
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
-    <h3>Review</h3>
-    <p>{{game.review}}</p>
     <form method="POST" action="/game/{{game.id}}">
         {{ form.csrf_token }}
         {{ form.write.label }} {{ form.write(size=20) }}
         <input type="submit" value="Go">
     </form>
+    <div>
+        <h3>Reviews</h3>
+        {% for review in review %}
+            <p>{{review.review_id}}</p>
+        {% endfor %}
+    </div>
     </div>
     {% endblock %}
 </body>
