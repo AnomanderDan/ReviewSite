@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <h2>{{game.name}}</h2>
+        <h2 class="game_title">{{game.name}}</h2>
     </div>
     {# Image + synopsis table #}
     <table>
@@ -24,17 +24,21 @@
     {# Basic information #}
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
-    <form method="POST" action="/game/{{game.id}}">
-        {{ form.csrf_token }}
-        {{ form.write.label }} {{ form.write(size=20) }}
-        <input type="submit" value="Go">
-    </form>
-    </div>
-    <div>
-        <h3>Reviews</h3>
-        {% for review in review %}
-            <p>{{review.create_rev}}</p>
-        {% endfor %}
+        <div>
+            <h3>Reviews</h3>
+            <form method="POST" action="/game/{{game.id}}">
+                {{ form.csrf_token }}
+                {{ form.write.label }} {{ form.write(size=20) }}
+                <input type="submit" value="Go">
+            </form>
+            <div class="game_container">
+                {% for review in review %}
+                    <div class="rev_box">
+                        <p class="rev">{{review.create_rev}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     {% endblock %}
 </body>

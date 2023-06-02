@@ -107,10 +107,13 @@ def game(id):
     game = Game.query.filter_by(id = id).first_or_404()
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
-        new_review = Reviews(create_rev=form.write.data, user_id=current_user.id, current_game=id)
-        db.session.add(new_review)
-        db.session.commit()
-        return redirect('/game/' + str(id))
+        if current_user:
+            new_review = Reviews(create_rev=form.write.data, user_id=current_user.id, current_game=id)
+            db.session.add(new_review)
+            db.session.commit()
+            return redirect('/game/' + str(id))
+        else:
+            return redirect('/Login')
 
     return render_template('game.html', game=game, form=form, review=review)
 
