@@ -24,6 +24,7 @@
     {# Basic information #}
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
+    {% if current_user.is_authenticated %}
         <div>
             <h3>Reviews</h3>
             <form method="POST" action="/game/{{game.id}}">
@@ -32,13 +33,19 @@
                 <input type="submit" value="Go">
             </form>
             <div class="game_container">
-                {% for review in review %}
+                {% for review in reviews %}
                     <div class="rev_box">
+                        <p>{{ review.user.username }}</p>
                         <p class="rev">{{review.create_rev}}</p>
                     </div>
                 {% endfor %}
             </div>
         </div>
+    {% else %}
+        <div>
+            <p>Please Login to see this section of the page</p>
+        </div>
+    {% endif %}
     </div>
     {% endblock %}
 </body>

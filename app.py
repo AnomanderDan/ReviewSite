@@ -47,18 +47,20 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    reviews = db.relationship('Reviews', backref='user', lazy=True)
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     create_rev = db.Column(db.Text)
-    current_game = db.Column(db.Integer, db.ForeignKey('game.id'))
+    current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
+    
 
 
 class Game_Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'))
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False)
 
 
 class Write_Review(FlaskForm):
@@ -103,7 +105,7 @@ def home():
 def game(id):
     print("msg")
     form = Write_Review()
-    review = Reviews.query.filter(Reviews.current_game == id)
+    reviews = Reviews.query.filter(Reviews.current_game == id)
     game = Game.query.filter_by(id = id).first_or_404()
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
@@ -115,7 +117,7 @@ def game(id):
         else:
             return redirect('/Login')
 
-    return render_template('game.html', game=game, form=form, review=review)
+    return render_template('game.html', game=game, form=form, reviews=reviews)
 
     # if form.validate_on_submit():
     #     hashed_password = bcrypt.generate_password_hash(form.password.data)
