@@ -116,21 +116,20 @@ table{
 
 
 
-.dropbtn {
-    background-color: #5a6d88;
-    color: white;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-}
   
 .dropdown {
     position: relative;
     display: inline-block;
     width: 100%;
+    background-color: #5a6d88;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 1px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
 }
   
 .dropdown-content {
@@ -151,15 +150,6 @@ table{
   
 .dropdown-content a:hover {
     background-color: #f1f1f1
-}
-  
-.dropdown:hover .dropdown-content {
-    display: flex;
-    width: 100%;
-}
-  
-.dropdown:hover .dropbtn {
-    background-color: #4e5d72;
 }
 
 .reviewcolour{

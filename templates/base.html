@@ -12,21 +12,12 @@
 
     {# sort menu #}
     <div class="dropdown">
-      <button class="dropbtn">Menu</button>
-      <div class="dropdown-content">
-        <div>
-          <table>
-            <tr>
-              <a href="{{url_for('login')}}">Login</a>
-              {% if current_user.is_authenticated %}
-              <a href="{{url_for('logout')}}">Logout</a>
-              {% endif %}
-            </tr>
-            <tr>
-              <a href="{{url_for('home')}}">Main Page</a>
-            </tr>
-          </table>
-        </div>
+      <div>
+          <a href="{{url_for('login')}}">Login</a>
+          {% if current_user.is_authenticated %}
+          <a href="{{url_for('logout')}}">Logout</a>
+          {% endif %}
+          <a href="{{url_for('home')}}">Main Page</a>
       </div>
     </div>
     
