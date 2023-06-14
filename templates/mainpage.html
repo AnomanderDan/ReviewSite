@@ -15,8 +15,8 @@
     {% for game in games %}
     <div class="card">
         <div class="container">
-          <a href=" {{url_for('game', id=game.id)}}"><img class="thumbnail" src="static/photo/{{ game.image }}"></img></a>
-          <h4><a href=" {{url_for('game', id=game.id)}}">{{game.name}}</a></h4>
+          <a class="card_link" href=" {{url_for('game', id=game.id)}}"><img class="thumbnail" src="static/photo/{{ game.image }}"></img></a>
+          <h4><a class="card_link" href=" {{url_for('game', id=game.id)}}">{{game.name}}</a></h4>
           <p>{{game.genre.genre}}</p>
         </div>
       </div>

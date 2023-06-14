@@ -82,7 +82,19 @@ p{
 a{
     text-decoration: none;
     font-family: 'Josefin Sans', sans-serif;
+    color: #d5dfdb;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card_link{
+    text-decoration: none;
+    font-family: 'Josefin Sans', sans-serif;
     color: #4C2A85;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
 }
 
 .return{
