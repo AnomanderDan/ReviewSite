@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, config, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, ForeignKey
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -7,10 +7,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+from flask_simple_captcha import CAPTCHA
 
 
 #app
 app = Flask(__name__)
+CAPTCHA = CAPTCHA(config=config.CAPTCHA_CONFIG)
+CAPTCHA.init_app(app)
+CAPTCHA_CONFIG = {'SECRET_CAPTCHA_KEY' : 'w_gru3hbj4j3b4j22_3b54'}
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///create.db"
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] ='_5#y2L"F4Q8z\n\xec]/'
@@ -171,6 +175,17 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
+    
+    # if request.method == 'GET':
+    #     captcha = CAPTCHA.create()
+    #     render_template('example.html', captcha=captcha)
+    # if request.method == 'POST':
+    #     c_hash = request.form.get('captcha-hash')
+    #     c_text = request.form.get('captcha-text')
+    #     if CAPTCHA.verify(c_text, c_hash):
+    #         return 'success'
+    #     else:
+    #         return 'failed captcha'
 
     return render_template('register.html', form=form)
 
