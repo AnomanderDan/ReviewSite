@@ -12,7 +12,8 @@
 
     {# sort menu #}
     <div class="dropdown">
-      <div>
+        <button class="dropbtn">Menu</button>
+      <div class="dropdown-content">
           <a href="{{url_for('login')}}">Login</a>
           {% if current_user.is_authenticated %}
           <a href="{{url_for('logout')}}">Logout</a>

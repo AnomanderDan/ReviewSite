@@ -37,6 +37,7 @@
                     <div class="rev_box">
                         <p>{{ review.user.username }}</p>
                         <p class="rev">{{review.create_rev}}</p>
+                        <form action="/delete" method="POST"><input type="submit" value="Go"><input type="hidden" value="{{review.id}}" name="review_id"></form>
                     </div>
                 {% endfor %}
             </div>

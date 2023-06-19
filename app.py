@@ -12,9 +12,9 @@ from flask_simple_captcha import CAPTCHA
 
 #app
 app = Flask(__name__)
-CAPTCHA = CAPTCHA(config=config.CAPTCHA_CONFIG)
-CAPTCHA.init_app(app)
-CAPTCHA_CONFIG = {'SECRET_CAPTCHA_KEY' : 'w_gru3hbj4j3b4j22_3b54'}
+# CAPTCHA = CAPTCHA(config=config.CAPTCHA_CONFIG)
+# CAPTCHA.init_app(app)
+# CAPTCHA_CONFIG = {'SECRET_CAPTCHA_KEY' : 'w_gru3hbj4j3b4j22_3b54'}
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///create.db"
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] ='_5#y2L"F4Q8z\n\xec]/'
@@ -188,6 +188,16 @@ def register():
     #         return 'failed captcha'
 
     return render_template('register.html', form=form)
+
+
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+    item_id = int(request.form.get("review_id"))
+    item = Reviews.query.filter_by(id = item_id).first()
+    db.session.delete(item)
+    db.session.commit()
+
+    return redirect("/game/" + str(id))
 
 
 #app run
