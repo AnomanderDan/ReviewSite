@@ -47,11 +47,13 @@ class Genre(db.Model):
     genre = db.Column(db.Text)
     games = db.relationship('Game', backref='genre', lazy=True)
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     reviews = db.relationship('Reviews', backref='user', lazy=True)
+
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,7 +61,6 @@ class Reviews(db.Model):
     create_rev = db.Column(db.Text)
     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     
-
 
 class Game_Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -69,7 +70,6 @@ class Game_Review(db.Model):
 
 class Write_Review(FlaskForm):
     write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
-
 
 
 class RegisterForm(FlaskForm):
@@ -88,13 +88,14 @@ class RegisterForm(FlaskForm):
                 "That username already exists. Please pick a new one.")
 
 
-
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
     password = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
 
     submit = SubmitField("Login")
+
+
 
 #routes
 @app.route('/')
@@ -107,7 +108,6 @@ def home():
 
 @app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
-    print("msg")
     form = Write_Review()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     game = Game.query.filter_by(id = id).first_or_404()
@@ -190,14 +190,18 @@ def register():
     return render_template('register.html', form=form)
 
 
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+
+
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
     item_id = int(request.form.get("review_id"))
     item = Reviews.query.filter_by(id = item_id).first()
+    game_id = str(request.form.get('current_game'))
     db.session.delete(item)
     db.session.commit()
 
-    return redirect("/game/" + str(id))
+    return redirect('/game/' + str(game_id))
 
 
 #app run
