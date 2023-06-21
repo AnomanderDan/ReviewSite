@@ -190,8 +190,15 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/edit/<int:id>', methods=['GET', 'POST'])
-
+# @app.route('/edit', methods=['GET', 'POST'])
+# def edit():
+#     form = Write_Review()
+#     item_id = int(request.form.get("review_id"))
+#     item = Reviews.query.filter_by(id = item_id).first()
+#     game_id = str(request.form.get('current_game'))
+#     if item.validate_on_submit():
+#         form
+         
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
