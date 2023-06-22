@@ -190,13 +190,20 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    item_id = int(request.form.get("review_id"))
+    item = Reviews.query.filter_by(id = item_id).first_or_404()
+    game_id = str(request.form.get('current_game'))
+    db.session.append(item)
+
+    return redirect('/game' + str(game_id))
 
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
     item_id = int(request.form.get("review_id"))
-    item = Reviews.query.filter_by(id = item_id).first()
+    item = Reviews.query.filter_by(id = item_id).first_or_404()
     game_id = str(request.form.get('current_game'))
     db.session.delete(item)
     db.session.commit()
