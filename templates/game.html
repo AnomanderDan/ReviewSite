@@ -29,19 +29,28 @@
             <h3>Reviews</h3>
             <form method="POST" action="/game/{{game.id}}">
                 {{ form.csrf_token }}
-                {{ form.write.label }} {{ form.write(size=20) }}
-                <input type="submit" value="Go">
+                {{ form.write.label }} {{ form.write(size=100) }}
+                <input type="submit" value="Add Review">
             </form>
+            <p>Review already written</p>
             <div class="game_container">
                 {% for review in reviews %}
                     <div class="rev_box">
                         <p>{{ review.user.username }}</p>
                         <p class="rev">{{review.create_rev}}</p>
                         {% if current_user.id == review.user_id %}
-                        <form action="/delete" method="POST">
-                            <input type="submit" value="Delete">
-                            <input type="hidden" value="{{review.id}}" name="review_id">
-                            <input type="hidden" value="{{game.id}}" name="current_game"></form>
+                            <form action="/delete" method="POST">
+                                <input type="submit" value="Delete">
+                                <input type="hidden" value="{{review.id}}" name="review_id">
+                                <input type="hidden" value="{{game.id}}" name="current_game">
+                            </form>
+                        {% endif %}
+                        {% if review.user.username %}
+                                <form action="/edit" method="POST">
+                                    <input type="submit" value="Edit">
+                                    <input type="hidden" value="{{review.id}}" name="review_id">
+                                    <input type="hidden" value="{{game.id}}" name="current_game">
+                                </form>
                         {% endif %}
                         {% if current_user.id == review.user_id %}
                         <form action="/edit" method="POST">
