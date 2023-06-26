@@ -72,6 +72,11 @@ class Write_Review(FlaskForm):
     write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
 
 
+class Update_Review(FlaskForm):
+    update = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Update Review"})
+
+
+
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
@@ -199,6 +204,11 @@ def edit():
 
     return redirect('/game' + str(game_id))
 
+# class Reviews(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     create_rev = db.Column(db.Text)
+#     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
