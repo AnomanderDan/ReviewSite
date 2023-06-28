@@ -39,7 +39,7 @@ class Game(db.Model):
     synopsis = db.Column(db.Text)
     #display it nicely
     def __repr__(self) -> str:
-        return f"Game: {self.game}"
+        return f"Game: {self.name}"
 
 
 class Genre(db.Model):
@@ -180,35 +180,19 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-    
-    # if request.method == 'GET':
-    #     captcha = CAPTCHA.create()
-    #     render_template('example.html', captcha=captcha)
-    # if request.method == 'POST':
-    #     c_hash = request.form.get('captcha-hash')
-    #     c_text = request.form.get('captcha-text')
-    #     if CAPTCHA.verify(c_text, c_hash):
-    #         return 'success'
-    #     else:
-    #         return 'failed captcha'
 
     return render_template('register.html', form=form)
 
 
-@app.route('/edit', methods=['GET', 'POST'])
-def edit():
-    item_id = int(request.form.get("review_id"))
-    item = Reviews.query.filter_by(id = item_id).first_or_404()
-    game_id = str(request.form.get('current_game'))
-    db.session.append(item)
+# @app.route('/edit', methods=['GET', 'POST'])
+# def edit():
+#     item_id = int(request.form.get("review_id"))
+#     item = Reviews.query.filter_by(id = item_id).first_or_404()
+#     game_id = str(request.form.get('current_game'))
+#     item.create_rev = request.form.get()
 
-    return redirect('/game' + str(game_id))
+#     return redirect('/game' + str(game_id))
 
-# class Reviews(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     create_rev = db.Column(db.Text)
-#     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
