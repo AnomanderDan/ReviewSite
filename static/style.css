@@ -114,7 +114,13 @@ table{
     margin-right: auto;
 }
 
-
+.syn{
+    background-color: #A3B1C7;
+    display: grid;
+    align-items: center; 
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 5px;
+}
 
 .dropbtn {
     background-color: #5a6d88;
