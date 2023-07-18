@@ -120,6 +120,17 @@ table{
     align-items: center; 
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 5px;
+    margin-left: 20%;
+    margin-right: 400px;
+}
+
+.synopsis{
+    display: flex;
+    
+}
+
+.simg{
+    width: 50%;
 }
 
 .dropbtn {
