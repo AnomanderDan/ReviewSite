@@ -15,8 +15,14 @@
     {# Image + synopsis table #}
     <div class="syn">
         <div class="synopsis">
-            <div class="simg"><img class="rpage" src="/static/photo/{{ game.image }}"></img></div>
-            <p>{{game.synopsis}}</p>
+            <table>
+                    <td>
+                        <div class="simg"><img class="rpage" src="/static/photo/{{ game.image }}"></img></div>
+                    </td>
+                    <td>
+                        <p>{{game.synopsis}}</p>
+                    </td>
+            </table>
         </div>
     </div>
     <div class="reviewcolour">
