@@ -119,19 +119,16 @@ table{
     background-color: #A3B1C7;
 }
 
-/* .syn{
-    background-color: #A3B1C7;
-    display: grid;
-    align-items: center; 
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 5px;
-    margin-left: 20%;
-    margin-right: 400px;
-} */
+ 
 
 .synopsis{
-    display: flex;
-    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 65%;
+    margin: auto;
+    background-color: #A3B1C7;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .simg{

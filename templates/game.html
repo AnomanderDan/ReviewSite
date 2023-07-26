@@ -1,65 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% extends "base.html" %}
-    {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h2 class="game_title">{{game.name}}</h2>
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <h2 class="game_title">{{game.name}}</h2>
+</div>
+{# Image + synopsis table #}
+
+<div class="synopsis">
+    <div class="simg">
+        <img class="rpage" src="/static/photo/{{ game.image }}"></img>
     </div>
-    {# Image + synopsis table #}
-    <div class="syn">
-        <div class="synopsis">
-            <table>
-                    <td>
-                        <div class="simg"><img class="rpage" src="/static/photo/{{ game.image }}"></img></div>
-                    </td>
-                    <td>
-                        <p>{{game.synopsis}}</p>
-                    </td>
-            </table>
-        </div>
+    <div class="synopsis-info">
+        <p>{{game.synopsis}}</p>
     </div>
-    <div class="reviewcolour">
+</div>
+
+<div class="reviewcolour">
     {# Basic information #}
     <h3>Genre</h3>
     <p>{{game.genre.genre}}</p>
     {% if current_user.is_authenticated %}
-        <div>
-            <h3>Reviews</h3>
-            <form method="POST" action="/game/{{game.id}}">
-                {{ form.csrf_token }}
-                {{ form.write.label }} {{ form.write(size=100) }}
-                <input type="submit" value="Add Review">
-            </form>
-            <p>Review already written</p>
-            <div class="game_container">
-                {% for review in reviews %} 
-                    <div class="rev_box">
-                        <p>{{ review.user.username }}</p>
-                        <p class="rev">{{review.create_rev}}</p>
-                        {% if current_user.id == review.user_id %}
-                            <form action="/delete" method="POST">
-                                <input type="submit" value="Delete">
-                                <input type="hidden" value="{{review.id}}" name="review_id">
-                                <input type="hidden" value="{{game.id}}" name="current_game">
-                            </form>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+    <div>
+        <h3>Reviews</h3>
+        <form method="POST" action="/game/{{game.id}}">
+            {{ form.csrf_token }}
+            {{ form.write.label }} {{ form.write(size=100) }}
+            <input type="submit" value="Add Review">
+        </form>
+        <p>Review already written</p>
+        <div class="game_container">
+            {% for review in reviews %}
+            <div class="rev_box">
+                <p>{{ review.user.username }}</p>
+                <p class="rev">{{review.create_rev}}</p>
+                {% if current_user.id == review.user_id %}
+                <form action="/delete" method="POST">
+                    <input type="submit" value="Delete">
+                    <input type="hidden" value="{{review.id}}" name="review_id">
+                    <input type="hidden" value="{{game.id}}" name="current_game">
+                </form>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
-    {% else %}
-        <div>
-            <h3>Please Login to see this section of the page</h3>
-        </div>
-    {% endif %}
     </div>
-    {% endblock %}
-</body>
-</html>
+    {% else %}
+    <div>
+        <h3>Please Login to see this section of the page</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
