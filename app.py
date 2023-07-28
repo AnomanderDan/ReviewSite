@@ -58,7 +58,7 @@ class User(db.Model, UserMixin):
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    create_rev = db.Column(db.Text)
+    review_text = db.Column(db.Text)
     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     
 
@@ -119,7 +119,7 @@ def game(id):
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
-            new_review = Reviews(create_rev=form.write.data, user_id=current_user.id, current_game=id)
+            new_review = Reviews(review_text=form.write.data, user_id=current_user.id, current_game=id)
             db.session.add(new_review)
             db.session.commit()
             return redirect('/game/' + str(id))
