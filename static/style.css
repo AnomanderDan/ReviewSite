@@ -22,7 +22,8 @@ h1{
 .header{
     padding: 0.1px;
     background-color: #185ba7;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .game_container{
@@ -241,4 +242,9 @@ table{
 
 .sort{
     display: none;
+}
+
+.genre{
+    font-family: 'Kanit', sans-serif;
+    font-size: 25px;
 }

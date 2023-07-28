@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, redirect, url_for, config, request
+from flask import Flask, render_template, redirect, url_for, config, request, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, ForeignKey
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -7,14 +7,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-from flask_simple_captcha import CAPTCHA
 
 
 #app
 app = Flask(__name__)
-# CAPTCHA = CAPTCHA(config=config.CAPTCHA_CONFIG)
-# CAPTCHA.init_app(app)
-# CAPTCHA_CONFIG = {'SECRET_CAPTCHA_KEY' : 'w_gru3hbj4j3b4j22_3b54'}
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///create.db"
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] ='_5#y2L"F4Q8z\n\xec]/'
@@ -151,7 +147,11 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                return redirect(url_for('dashboard'))
+                flash("Successfully Logged in")
+                return redirect(url_for('home'))
+            
+        else:
+            flash("That username or password do not exist, please try again")
 
     return render_template('login.html', form=form)
 
@@ -166,8 +166,18 @@ def dashboard():
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
-    logout_user()
-    return redirect(url_for('login'))
+    form = LoginForm()
+    user = User.query.filter_by(username=form.username.data).first()
+    if user is user:
+        logout_user()
+        flash("You have been successfully logged out")
+        return redirect(url_for('login'), user=user)
+    
+    else:
+        return redirect(url_for('wrong'))
+    #logout_user()
+    #flash("You have been successfully logged out")
+    #return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -175,23 +185,15 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        flash("Successfully registered")
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
+        
 
     return render_template('register.html', form=form)
-
-
-# @app.route('/edit', methods=['GET', 'POST'])
-# def edit():
-#     item_id = int(request.form.get("review_id"))
-#     item = Reviews.query.filter_by(id = item_id).first_or_404()
-#     game_id = str(request.form.get('current_game'))
-#     item.create_rev = request.form.get()
-
-#     return redirect('/game' + str(game_id))
 
 
 @app.route('/delete', methods=['GET', 'POST'])
@@ -201,6 +203,7 @@ def delete():
     game_id = str(request.form.get('current_game'))
     db.session.delete(item)
     db.session.commit()
+    flash("Review successfully deleted")
 
     return redirect('/game/' + str(game_id))
 

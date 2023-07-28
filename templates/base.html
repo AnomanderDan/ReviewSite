@@ -10,7 +10,7 @@
 <body>
     {% include "header.html" %}
 
-    {# sort menu #}
+    {# main menu #}
     <div class="dropdown">
         <button class="dropbtn">Menu</button>
       <div class="dropdown-content">
@@ -21,6 +21,16 @@
           <a href="{{url_for('home')}}">Main Page</a>
       </div>
     </div>
+    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
     
 
     
