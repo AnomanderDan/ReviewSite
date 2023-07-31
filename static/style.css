@@ -120,16 +120,6 @@ table{
     background-color: #A3B1C7;
 }
 
-/* .syn{
-    background-color: #A3B1C7;
-    display: grid;
-    align-items: center; 
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 5px;
-    margin-left: 20%;
-    margin-right: 400px;
-} */
-
 .synopsis{
     display: flex;
     
@@ -247,4 +237,13 @@ table{
 .genre{
     font-family: 'Kanit', sans-serif;
     font-size: 25px;
+}
+
+.flashes{
+    background-color: #CB3C3C;
+    padding: 1px;
+    list-style: none;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #8A0606;
 }
