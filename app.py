@@ -1,5 +1,4 @@
-import sqlite3
-from flask import Flask, render_template, redirect, url_for, config, request, flash, abort
+from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, ForeignKey
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -24,9 +23,10 @@ login_manager.login_view="Login"
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Gets user id"""
     return User.query.get(int(user_id))
 
-#classes
+# region models
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
@@ -56,12 +56,14 @@ class Reviews(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     review_text = db.Column(db.Text)
     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
-    
+
 
 class Game_Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False)\
+
+#endregion
 
 
 class Write_Review(FlaskForm):
@@ -72,11 +74,11 @@ class Update_Review(FlaskForm):
     update = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Update Review"})
 
 
-
 class RegisterForm(FlaskForm):
+    """Registration Flask Form"""
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
-    password = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
 
     submit = SubmitField("Register")
 
@@ -93,7 +95,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
-    password = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
 
     submit = SubmitField("Login")
 
@@ -110,6 +112,7 @@ def home():
 
 @app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
+    """this """
     form = Write_Review()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     game = Game.query.filter_by(id = id).first_or_404()
@@ -165,7 +168,6 @@ def dashboard():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
 def logout():
     if current_user.is_authenticated:
         logout_user()
@@ -175,10 +177,7 @@ def logout():
     
     else:
         flash("You cannot logout when you are not signed in")
-        abort('404')
-    #logout_user()
-    #flash("You have been successfully logged out")
-    #return redirect(url_for('login'))
+        abort(404)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -212,3 +211,6 @@ def delete():
 #app run
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+#WRITE DOWN AN ABOUT PAGE
