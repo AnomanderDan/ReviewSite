@@ -13,17 +13,10 @@
         <h2 class="game_title">{{game.name}}</h2>
     </div>
     {# Image + synopsis table #}
-    <div class="syn">
-        <div class="synopsis">
-            <table>
-                    <td>
-                        <div class="simg"><img class="rpage" src="/static/photo/{{ game.image }}"></img></div>
-                    </td>
-                    <td>
-                        <p>{{game.synopsis}}</p>
-                    </td>
-            </table>
-        </div>
+    <div class="synopsis">
+            <div class="simg"><img class="rpage" src="/static/photo/{{ game.image }}"></img></div>
+                        
+            <p>{{game.synopsis}}</p>
     </div>
     <div class="reviewcolour">
     {# Basic information #}

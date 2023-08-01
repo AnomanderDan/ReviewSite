@@ -167,15 +167,15 @@ def dashboard():
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
-    form = LoginForm()
-    user = User.query.filter_by(username=form.username.data).first()
-    if user is user:
+    if current_user.is_authenticated:
         logout_user()
         flash("You have been successfully logged out")
-        return redirect(url_for('login'), user=user)
+        
+        return redirect(url_for('login'))
     
     else:
-        return redirect(url_for('wrong'))
+        flash("You cannot logout when you are not signed in")
+        abort('404')
     #logout_user()
     #flash("You have been successfully logged out")
     #return redirect(url_for('login'))

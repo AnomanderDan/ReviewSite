@@ -121,7 +121,13 @@ table{
 }
 
 .synopsis{
-    display: flex;
+    background-color: #A3B1C7;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 45%;
+    margin: auto;
+    padding: 5px;
+    border-radius: 5px;
     
 }
 
@@ -247,3 +253,4 @@ table{
     border-style: solid;
     border-color: #8A0606;
 }
+
