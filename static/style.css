@@ -254,3 +254,12 @@ table{
     border-color: #8A0606;
 }
 
+.Overview{
+    background-color: #A3B1C7;
+    display: grid;
+    width: 45%;
+    margin: auto;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}

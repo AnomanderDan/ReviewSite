@@ -28,6 +28,7 @@ def load_user(user_id):
 
 # region models
 class Game(db.Model):
+    """Stores general game info"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
@@ -39,12 +40,14 @@ class Game(db.Model):
 
 
 class Genre(db.Model):
+    """Stores genre info"""
     id = db.Column(db.Integer, primary_key=True)
     genre = db.Column(db.Text)
     games = db.relationship('Game', backref='genre', lazy=True)
 
 
 class User(db.Model, UserMixin):
+    """Stores user info"""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
@@ -52,58 +55,52 @@ class User(db.Model, UserMixin):
 
 
 class Reviews(db.Model):
+    """stores reviews"""
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     review_text = db.Column(db.Text)
     current_game = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
 
 
-class Game_Review(db.Model):
+class GameReview(db.Model):
+    """Stores game and review id"""
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False)\
-
 #endregion
 
-
-class Write_Review(FlaskForm):
+#region flask forms
+class WriteReview(FlaskForm):
+    """Review writing form"""
     write = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Write review here"})
-
-
-class Update_Review(FlaskForm):
-    update = StringField(validators=[InputRequired(), Length(min=1, max=1000)], render_kw={"placeholder" : "Update Review"})
 
 
 class RegisterForm(FlaskForm):
     """Registration Flask Form"""
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
-
     submit = SubmitField("Register")
-
     def validate_username(self, username):
+        """Checks if username is already being used"""
         existing_user_name = User.query.filter_by(username=username.data).first()
         print(existing_user_name)
-
         if existing_user_name:
             flash("Username already exists")
-            raise ValidationError("That username already exists. Please pick a new one.")
-            
+            raise ValidationError("That username already exists. Please pick a new one.")     
 
 
 class LoginForm(FlaskForm):
+    """Login Form"""
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
-
     submit = SubmitField("Login")
+#endregion
 
 
-
-#routes
+#region routes
 @app.route('/')
 def home():
+    """Goes to home page"""
     games = Game.query.all()
     genres = Genre.query.all()
 
@@ -112,8 +109,8 @@ def home():
 
 @app.route('/game/<int:id>', methods=['GET', 'POST'])
 def game(id):
-    """this """
-    form = Write_Review()
+    """This shows the game page """
+    form = WriteReview()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     game = Game.query.filter_by(id = id).first_or_404()
     #review = Game_Review.query.filter_by(id = id).first()
@@ -129,22 +126,31 @@ def game(id):
     return render_template('game.html', game=game, form=form, reviews=reviews)
 
 
-@app.route('/genre/<int:id>')
-def sort(id):
-    game = Game.query.filter_by(id = id).first_or_404()
-    print(game)
-    return render_template('sort.html', game=game)
+# @app.route('/genre/<int:id>')
+# def sort(id):
+#     """"""
+#     game = Game.query.filter_by(id = id).first_or_404()
+#     print(game)
+#     return render_template('sort.html', game=game)
 
 
 # 404 error page
 @app.errorhandler(404)
 def wrong(e):
+    """404 Page"""
     return render_template("404.html"), 404
+
+
+@app.route('/about')
+def about():
+    """The about page"""
+    return render_template('about.html')
 
 
 #login routes
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Login Page"""
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -153,28 +159,19 @@ def login():
                 login_user(user)
                 flash("Successfully Logged in")
                 return redirect(url_for('home'))
-            
         else:
             flash("That username or password do not exist, please try again")
 
     return render_template('login.html', form=form)
 
 
-@app.route('/dashboard', methods=['GET', 'POST'])
-@login_required
-def dashboard():
-    
-    return render_template('dashboard.html')
-
-
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    """Logout"""
     if current_user.is_authenticated:
         logout_user()
         flash("You have been successfully logged out")
-        
         return redirect(url_for('login'))
-    
     else:
         flash("You cannot logout when you are not signed in")
         abort(404)
@@ -182,8 +179,8 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """Registration Page"""
     form = RegisterForm()
-
     if form.validate_on_submit():
         flash("Successfully registered")
         hashed_password = bcrypt.generate_password_hash(form.password.data)
@@ -191,13 +188,12 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-        
-
     return render_template('register.html', form=form)
 
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
+    """Delete Function"""
     item_id = int(request.form.get("review_id"))
     item = Reviews.query.filter_by(id = item_id).first_or_404()
     game_id = str(request.form.get('current_game'))
@@ -206,6 +202,8 @@ def delete():
     flash("Review successfully deleted")
 
     return redirect('/game/' + str(game_id))
+
+#endregion
 
 
 #app run
