@@ -112,7 +112,7 @@ def game(id):
     """This shows the game page """
     form = WriteReview()
     reviews = Reviews.query.filter(Reviews.current_game == id)
-    game = Game.query.filter_by(id = id).first_or_404()
+    gamename = Game.query.filter_by(id = id).first_or_404()
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
@@ -123,7 +123,7 @@ def game(id):
         else:
             return redirect('/Login')
 
-    return render_template('game.html', game=game, form=form, reviews=reviews)
+    return render_template('game.html', game=gamename, form=form, reviews=reviews)
 
 
 # @app.route('/genre/<int:id>')
@@ -160,7 +160,7 @@ def login():
                 flash("Successfully Logged in")
                 return redirect(url_for('home'))
         else:
-            flash("That username or password do not exist, please try again")
+            flash("That username or password do not exist, please try again.")
 
     return render_template('login.html', form=form)
 
@@ -173,8 +173,8 @@ def logout():
         flash("You have been successfully logged out")
         return redirect(url_for('login'))
     else:
-        flash("You cannot logout when you are not signed in")
-        abort(404)
+        flash("You cannot logout when you are not signed in.")
+        return redirect(url_for('register'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -199,7 +199,7 @@ def delete():
     game_id = str(request.form.get('current_game'))
     db.session.delete(item)
     db.session.commit()
-    flash("Review successfully deleted")
+    flash("Review successfully deleted.")
 
     return redirect('/game/' + str(game_id))
 
