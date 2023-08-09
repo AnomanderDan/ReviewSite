@@ -126,14 +126,6 @@ def game(id):
     return render_template('game.html', game=gamename, form=form, reviews=reviews)
 
 
-# @app.route('/genre/<int:id>')
-# def sort(id):
-#     """"""
-#     game = Game.query.filter_by(id = id).first_or_404()
-#     print(game)
-#     return render_template('sort.html', game=game)
-
-
 # 404 error page
 @app.errorhandler(404)
 def wrong(e):
