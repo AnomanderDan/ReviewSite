@@ -263,3 +263,16 @@ table{
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
+
+.username{
+    font-size: 26px;
+}
+
+.submit{
+    background-color: black;
+}
+
+.write_review{
+    margin: 5px;
+}

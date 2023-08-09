@@ -21,14 +21,14 @@
             <h3>Reviews</h3>
             <form method="POST" action="/game/{{game.id}}">
                 {{ form.csrf_token }}
-                {{ form.write.label }} {{ form.write(size=100) }}
-                <input type="submit" value="Add Review">
+                {{ form.write.label }} {{ form.write(size=100, class_="write_review" ) }}
+                <input type="submit" value="Add Review" class="submit">
             </form>
             <p>Review already written</p>
             <div class="game_container">
                 {% for review in reviews %} 
                     <div class="rev_box">
-                        <p>{{ review.user.username }}</p>
+                        <p class="username">{{ review.user.username }}</p>
                         <p class="rev">{{review.review_text}}</p>
                         {% if current_user.id == review.user_id %}
                             <form action="/delete" method="POST">

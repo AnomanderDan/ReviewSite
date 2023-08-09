@@ -126,14 +126,6 @@ def game(id):
     return render_template('game.html', game=gamename, form=form, reviews=reviews)
 
 
-# @app.route('/genre/<int:id>')
-# def sort(id):
-#     """"""
-#     game = Game.query.filter_by(id = id).first_or_404()
-#     print(game)
-#     return render_template('sort.html', game=game)
-
-
 # 404 error page
 @app.errorhandler(404)
 def wrong(e):
@@ -160,7 +152,7 @@ def login():
                 flash("Successfully Logged in")
                 return redirect(url_for('home'))
         else:
-            flash("That username or password do not exist, please try again.")
+            flash("That username or password is incorrect, please try again.")
 
     return render_template('login.html', form=form)
 
