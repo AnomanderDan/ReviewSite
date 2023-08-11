@@ -116,6 +116,7 @@ def game(id):
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
+            flash("Review successfully added")
             new_review = Reviews(review_text=form.write.data, user_id=current_user.id, current_game=id)
             db.session.add(new_review)
             db.session.commit()
