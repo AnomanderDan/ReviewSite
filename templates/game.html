@@ -19,12 +19,16 @@
     {% if current_user.is_authenticated %}
         <div>
             <h3>Reviews</h3>
-            <form method="POST" action="/game/{{game.id}}">
-                {{ form.csrf_token }}
-                {{ form.write.label }} {{ form.write(size=100) }}
-                <input type="submit" value="Add Review">
-            </form>
-            <p>Review already written</p>
+            {% if current_user.reviews != current_game %}
+                <form method="POST" action="/game/{{game.id}}">
+                    {{ form.csrf_token }}
+                    {{ form.write.label }} {{ form.write(size=100) }}
+                    <input type="submit" value="Add Review">
+                </form>
+                
+            {% else %} 
+                <p>Review already written</p>
+            {% endif %}
             <div class="game_container">
                 {% for review in reviews %} 
                     <div class="rev_box">
