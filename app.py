@@ -113,6 +113,7 @@ def game(id):
     form = WriteReview()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     gamename = Game.query.filter_by(id = id).first_or_404()
+    hasreviewed = True if Reviews.query.filter_by(user_id = current_user.id, current_game = id).count() > 0 else False
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
@@ -124,7 +125,7 @@ def game(id):
         else:
             return redirect('/Login')
 
-    return render_template('game.html', game=gamename, form=form, reviews=reviews)
+    return render_template('game.html', game=gamename, form=form, reviews=reviews, hasreviewed=hasreviewed)
 
 
 # 404 error page
