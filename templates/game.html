@@ -19,7 +19,6 @@
     {% if current_user.is_authenticated %}
         <div>
             <h3>Reviews</h3>
-            {{current_user.reviews}}
             {% if not hasreviewed %}
                 <form method="POST" action="/game/{{game.id}}">
                     {{ form.csrf_token }}
