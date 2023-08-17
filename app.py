@@ -122,8 +122,6 @@ def game(id):
             db.session.add(new_review)
             db.session.commit()
             return redirect('/game/' + str(id))
-        else:
-            return redirect('/login')
 
     return render_template('game.html', game=gamename, form=form, reviews=reviews, hasreviewed=hasreviewed)
 
