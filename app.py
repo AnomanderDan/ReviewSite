@@ -113,7 +113,7 @@ def game(id):
     form = WriteReview()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     gamename = Game.query.filter_by(id = id).first_or_404()
-    hasreviewed = True if Reviews.query.filter_by(user_id = current_user, current_game = id).count() > 0 else False
+    hasreviewed = True if Reviews.query.filter_by(user_id = current_user.id, current_game = id).count() > 0 else False
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
