@@ -113,7 +113,7 @@ def game(id):
     form = WriteReview()
     reviews = Reviews.query.filter(Reviews.current_game == id)
     gamename = Game.query.filter_by(id = id).first_or_404()
-    hasreviewed = True if Reviews.query.filter_by(user_id = current_user.id, current_game = id).count() > 0 else False
+    hasreviewed = True if Reviews.query.filter_by(user_id = current_user, current_game = id).count() > 0 else False
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
         if current_user:
@@ -123,9 +123,15 @@ def game(id):
             db.session.commit()
             return redirect('/game/' + str(id))
         else:
-            return redirect('/Login')
+            return redirect('/login')
 
     return render_template('game.html', game=gamename, form=form, reviews=reviews, hasreviewed=hasreviewed)
+
+
+@app.route('/about')
+def about():
+    """The about page"""
+    return render_template('about.html')
 
 
 # 404 error page
@@ -133,12 +139,6 @@ def game(id):
 def wrong(e):
     """404 Page"""
     return render_template("404.html"), 404
-
-
-@app.route('/about')
-def about():
-    """The about page"""
-    return render_template('about.html')
 
 
 #login routes
