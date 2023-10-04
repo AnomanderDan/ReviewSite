@@ -114,9 +114,7 @@ def game(id):
     reviews = Reviews.query.filter(Reviews.current_game == id)
     gamename = Game.query.filter_by(id = id).first_or_404()
     hasreviewed = False
-    print(current_user)
     if current_user.is_authenticated:
-        print(current_user)
         hasreviewed = True if Reviews.query.filter_by(user_id = current_user.id, current_game = id).count() > 0 else False
     #review = Game_Review.query.filter_by(id = id).first()
     if form.validate_on_submit():
